@@ -65,14 +65,20 @@ public class Main {
              * 5 chicken
              */
             System.out.println("Test #3");
-            String line=null;
+            String line1=groceryList1.toString();
+            String line2= "";
             for(int i =0; i<groceryList1.size(); i++){
-                    line +=  i +" " + groceryList1.get(i) + "\n";
+                    line2 +=  i +" " + groceryList1.get(i) + "\n";
             }
             // This test passes when I manually check it against the expected return, the issue in automating it is
             // just that I am not sure what the compiler is doing or how it is ultimately justifying it in the return,
             // otherwise these do indeed match. Maybe I can get some help to figure it out.
-            if(groceryList1.toString() == line){
+
+            // This can serve as proof that the test passed or should have.
+            System.out.println("toString method called:\n"+line1);
+            System.out.println("Compiled line2 output:\n"+line2);
+
+            if(line1 == line2){
                     testPassed();
             } else {
                     testFailed();

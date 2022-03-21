@@ -8,9 +8,9 @@
 package SinglyLinkedListProject;
 
 public class Main {
-        public static final String RESET = "\033[0m";  // Text Reset
-        public static final String RED = "\033[0;31m";     // RED
-        public static final String GREEN = "\033[0;32m";
+        public static final String RESET = "\033[0m";  // Text color Reset
+        public static final String RED = "\033[0;31m";     // RED text color
+        public static final String GREEN = "\033[0;32m"; // Green text color
         public static void testPassed(){
                 System.out.println( GREEN +"Passed\n*************************************************" + RESET);
         }

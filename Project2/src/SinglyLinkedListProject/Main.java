@@ -47,7 +47,7 @@ public class Main {
             groceryList1.add(5, "chicken");
             if(groceryList1.get(0) == "milk" && groceryList1.get(1) == "eggs" && groceryList1.get(2) == "butter"
                     && groceryList1.get(3) == "apples" && groceryList1.get(4) == "bread" && groceryList1.get(5) == "chicken"){
-                        testPassed();
+                    testPassed();
             } else{
                     testFailed();
             }
@@ -69,19 +69,15 @@ public class Main {
             for(int i =0; i<groceryList1.size(); i++){
                     line +=  i +" " + groceryList1.get(i) + "\n";
             }
-
+            // This test passes when I manually check it against the expected return, the issue in automating it is
+            // just that I am not sure what the compiler is doing or how it is ultimately justifying it in the return,
+            // otherwise these do indeed match. Maybe I can get some help to figure it out.
             if(groceryList1.toString() == line){
                     testPassed();
             } else {
                     testFailed();
             }
 
-//            0 milk
-//            1 eggs
-//            2 butter
-//            3 apples
-//            4 bread
-//            5 chicken
 
             /* Test #4
              * Test the remove() method.
@@ -435,14 +431,126 @@ public class Main {
              */
             System.out.println("Test #20");
             String[] listItems = {"peanut butter", "succotash", "fennel seeds",
-                    "ginger ale", "almond butter", "okra", "bleu cheese",
+                    "ginger ale", "almond butter", "okra", "blue cheese",
                     "five-spice powder", "vegemite", "mozzarella", "baking powder",
                     "breadfruit", "squid", "ale", "panko bread crumbs", "tortelini",
                     "sugar", "salt", "maraschino cherries", "pears"};
             System.out.println();
             ADTGroceryList groceryList2 = new ADTGroceryList(listItems);
-            System.out.println(groceryList2.toString());
-            System.out.println("*************************************************");
+            // This should be another issue, similar to that we checked in test 3 where I can not be sure of what the return
+            // looks like exactly to test against. One thing I can do is similar to test 16 with stich cases but this.
+
+            for(int i = 0; i < groceryList1.size(); i++) {
+                    current = groceryList1.get(i);
+                    switch (i){
+                            case 0:
+                                    if(current != "peanut butter"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 1:
+                                    if(current != "succotash"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 2:
+                                    if(current != "fennel seeds"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 3:
+                                    if(current != "ginger ale"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 4:
+                                    if(current != "almond butter"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 5:
+                                    if(current != "okra"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 6:
+                                    if(current != "blue cheese"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 7:
+                                    if(current != "five-spice powder"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 8:
+                                    if(current != "vegemite"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 9:
+                                    if(current != "mozzarella"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 10:
+                                    if(current != "baking powder"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 11:
+                                    if(current != "breadfruit"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 12:
+                                    if(current != "squid"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 13:
+                                    if(current != "ale"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 14:
+                                    if(current != "panko bread crumbs"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 15:
+                                    if(current != "tortelini"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 16:
+                                    if(current != "sugar"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 17:
+                                    if(current != "salt"){
+                                            result = false;
+                                    }
+                                    break;
+                            case 18:
+                                    if(current != "maraschino cherries"){
+                                            result = false;
+                                    }
+                                    break;
+                            default:
+                                    if(current != "pears"){
+                                            result = false;
+                                    }
+                                    break;
+                    }
+            }
+
+            if(result){
+                    testPassed();
+            }else{
+                    testFailed();
+            }
 
             /* Test #21
              * Test the add() method on the groceryList2 object by attempting to

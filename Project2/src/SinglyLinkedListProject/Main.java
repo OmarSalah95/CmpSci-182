@@ -91,7 +91,7 @@ public class Main {
              */
             System.out.println("Test #4");
             groceryList1.remove(0);
-            if(groceryList1.get(0) == "eggs"){
+            if(groceryList1.get(0) == "eggs" && groceryList1.get(1) == "butter"){
                     testPassed();
             }else{
                     testFailed();
@@ -108,7 +108,7 @@ public class Main {
              */
             System.out.println("Test #5");
             groceryList1.remove(3);
-            if(groceryList1.get(3) == "chicken"){
+            if(groceryList1.get(2) == "apples" && groceryList1.get(3) == "chicken" && groceryList1.get(4) == "Please enter a valid index."){
                     testPassed();
             }else{
                     testFailed();

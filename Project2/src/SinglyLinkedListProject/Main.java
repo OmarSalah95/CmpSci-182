@@ -26,12 +26,11 @@ public class Main {
              */
             System.out.println("Test #1");
             ADTGroceryList groceryList1 = new ADTGroceryList();
-            if(groceryList1.isEmpty()){
+            if (groceryList1.isEmpty()) {
                     testPassed();
-            }else{
-                   testFailed();
+            } else {
+                    testFailed();
             }
-            System.out.println();
 
             /* Test #2
              * Test the add(index, item) method by adding six items,

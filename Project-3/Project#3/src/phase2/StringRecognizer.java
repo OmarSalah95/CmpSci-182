@@ -34,7 +34,6 @@ public class StringRecognizer {
 
         while (inLanguage && i < str.length())
         {
-
             try
             {
                 ch = str.charAt(i);

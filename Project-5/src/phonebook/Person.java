@@ -19,7 +19,7 @@ public class Person {
         String[] names = newNam.split(" ");
         newNam = "";
         for(String nam : names){
-            newNam += " " + nam.substring(0, 1).toUpperCase() + nam.substring(1);
+            newNam +=  nam.substring(0, 1).toUpperCase() + nam.substring(1) + " ";
         }
         this.name = newNam;
     }
@@ -50,6 +50,9 @@ public class Person {
     }
 
     public void printInfo(){
+        System.out.println("-----------------------------------");
         System.out.println("Name: "+ this.name + "\nNumber: "+this.number);
     }
+
+
 }

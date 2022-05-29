@@ -2,21 +2,27 @@ package phonebook;
 
 import org.w3c.dom.ls.LSOutput;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class PhoneBook {
     private Person root;
 
+    public PhoneBook(){
+        load();
+    }
     public PhoneBook(Person p1){
         this.root = p1;
     }
+
     public void clearScreen(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-//    Save
-//    Load
+
 
 
     public void add(String nam, String num){
@@ -24,8 +30,7 @@ public class PhoneBook {
     }
 
     public Person add(String nam, String num, Person cur)  {
-        Person newP;
-
+        int flg;
             if (cur == null) {
                 cur = new Person(nam, num);
                 System.out.println("\n\n\n\nContact added\n\n\n\n");
@@ -37,10 +42,10 @@ public class PhoneBook {
                 clearScreen();
                 return cur;
             }
-
-            if (nam.compareToIgnoreCase(cur.getName()) < 0)
+            flg = nam.compareToIgnoreCase(cur.getName());
+            if (flg < 0)
                 cur.setLeft(add(nam, num, cur.getLeft()));
-            else if (nam.compareToIgnoreCase(cur.getName()) > 0)
+            else if (flg > 0)
                 cur.setRight(add(nam,num, cur.getRight()));
             return cur;
 
@@ -52,11 +57,35 @@ public class PhoneBook {
     }
 
     public Person search(String name, Person cur) {
-        if (name.compareToIgnoreCase(cur.getName()) < 0 && cur.getLeft() != null)
+        int flg = name.compareToIgnoreCase(cur.getName());
+
+        if (flg < 0 && cur.getLeft() != null)
                  return search(name, cur.getLeft());
-        if (name.compareToIgnoreCase(cur.getName()) > 0 && cur.getRight() != null)
+        if (flg > 0 && cur.getRight() != null)
                 return  search(name, cur.getRight());
         return cur;
+    }
+
+    public void load(){
+        try {
+            // Read from file
+            BufferedReader in = new BufferedReader(
+                    new FileReader("contacts.csv"));
+
+            String mystring;
+            while ((mystring = in.readLine()) != null) {
+                String[] data = mystring.split(",");
+                add(data[0], data[1]);
+            }
+            in.close();
+        } catch (IOException e) {
+            System.out.println("Exception Occurred" + e);
+        }
+
+    }
+
+    public void save(){
+
     }
 
     public void displayContacts(){

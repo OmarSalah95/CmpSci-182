@@ -21,6 +21,7 @@ public class Person {
         for(String nam : names){
             newNam +=  nam.substring(0, 1).toUpperCase() + nam.substring(1) + " ";
         }
+        newNam = newNam.substring(0, newNam.length()-1);
         this.name = newNam;
     }
 
@@ -48,6 +49,23 @@ public class Person {
     public void setLeft(Person p){
         this.left = p;
     }
+
+    public int isParent(){
+        if(this.getLeft() == null && getRight() == null){
+            return 0;
+        }
+        if(this.getLeft() != null && this.getRight() == null){
+            return 1;
+        }
+        if(this.getLeft() == null && this.getRight() != null){
+            return 2;
+        }
+        if(this.getLeft() != null && this.getRight() != null){
+            return 3;
+        }
+        return 2;
+    }
+
 
     public void printInfo(){
         System.out.println("-----------------------------------");

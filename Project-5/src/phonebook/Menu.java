@@ -44,6 +44,7 @@ public class Menu {
                     scn.nextLine();
                     System.out.println("Please enter the name of the contact you would like to delete: ");
                     name = scn.nextLine();
+//                    pb.searchParent(name);
                     pb.delete(name);
                     break;
                 case 4:

@@ -1,3 +1,12 @@
+/*
+ * Project 5
+ * Class: CmpSci-182/L
+ * Developer: Omar Salah
+ * Date: 5/30/2022
+ * Description: This is the main menu driver that takes the users inputs to search
+ *      and operate the Phonebook Binary Tree allowing users to add, delete,
+ *      display, update, and search contacts
+ */
 package phonebook;
 
 import java.util.Scanner;
@@ -40,11 +49,9 @@ public class Menu {
                     pb.displayContacts();
                     break;
                 case 3:
-                    System.out.println("Still need to implement delete");
                     scn.nextLine();
                     System.out.println("Please enter the name of the contact you would like to delete: ");
                     name = scn.nextLine();
-//                    pb.searchParent(name);
                     pb.delete(name);
                     break;
                 case 4:
@@ -62,7 +69,6 @@ public class Menu {
                     pb.updateNumber(name, num);
                     break;
                 default:
-                    System.out.println("Still needs to be fixed");
                     pb.save();
                     running = false;
                     break;

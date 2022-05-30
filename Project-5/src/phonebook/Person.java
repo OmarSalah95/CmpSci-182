@@ -1,3 +1,13 @@
+/*
+ * Project 5
+ * Class: CmpSci-182/L
+ * Developer: Omar Salah
+ * Date: 5/30/2022
+ * Description: This is the Person class that will store a contacts information
+ *      such as name and number, and will also function as a node in the BST
+ *      storing references to a right and left child as well as all the
+ *      functionality needed as a node in a BST.
+ */
 package phonebook;
 
 public class Person {

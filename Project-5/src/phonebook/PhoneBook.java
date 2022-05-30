@@ -1,7 +1,15 @@
+/*
+ * Project 5
+ * Class: CmpSci-182/L
+ * Developer: Omar Salah
+ * Date: 5/30/2022
+ * Description: This will be the basic Binary search tree and all included functionality
+ *      to operate the BST that is storing Person's as nodes
+ *
+ */
 package phonebook;
 
 import java.io.*;
-import java.util.HashSet;
 import java.util.*;
 
 
@@ -16,7 +24,7 @@ public class PhoneBook {
         this.root = p1;
     }
 
-    public void clearScreen(){
+    private void clearScreen(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
@@ -30,12 +38,6 @@ public class PhoneBook {
             if (cur == null) {
                 cur = new Person(nam, num);
                 System.out.println("\n\n\n\nContact added\n\n\n\n");
-//                try {
-//                    TimeUnit.SECONDS.sleep(1);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-                clearScreen();
                 return cur;
             }
             flg = nam.compareToIgnoreCase(cur.getName());
@@ -46,33 +48,30 @@ public class PhoneBook {
             return cur;
     }
 
-
-    public void delete(String name, Person ... p)
+    public void delete(String name)
     {
-        Person target = p.length > 0 ? search(name, p[0]) : search(name); // Finding the node that is to be deleted
-        Person nextInLine = target.getLeft() != null // Single child or 2 children
-                ? findMax(target.getLeft())
-                : target.getRight() != null // Single child on the left
+        Person target = search(name); // Finding the node that is to be deleted
+        Person successor = target.getLeft() != null // Single child on the left or 2 children
+                    ? findMax(target.getLeft())
+                : target.getRight() != null // Single child on the right
                     ? findMin(target.getRight())
                 : target; // No Children
-        Person nextInLineParent = searchParent(nextInLine.getName());
+        Person successorParent = searchParent(successor.getName());
 
-        if(nextInLine!=target){
+        if(successor!=target){
             // Re-assign values for the node that is "deleted"
             // This is basically moving the leaf node that is the successor into the
             // predecessors position
-            target.setName(nextInLine.getName());
-            target.setNumber(nextInLine.getNumber());
-
+            target.setName(successor.getName());
+            target.setNumber(successor.getNumber());
             // Re assign the refrence to the leaf node to be null i.e. delete the leaf
-            if( nextInLineParent.getLeft() != null && nextInLineParent.getLeft().getName().compareToIgnoreCase(name) == 0) nextInLineParent.setLeft(null);
-            if( nextInLineParent.getRight() != null && nextInLineParent.getRight().getName().compareToIgnoreCase(name) == 0) nextInLineParent.setRight(null);
-//            delete(nextInLine.getName(), nextInLine);
+            if( successorParent.getLeft() != null && successorParent.getLeft().getName().compareToIgnoreCase(successor.getName()) == 0) successorParent.setLeft(null);
+            if( successorParent.getRight() != null && successorParent.getRight().getName().compareToIgnoreCase(successor.getName()) == 0) successorParent.setRight(null);
         } else {
             // If this case is triggered that would mean that the node being deleted is a leaf, and thus
             // we will simply assign the node to be deleted to be null
-            if( nextInLineParent.getLeft() != null && nextInLineParent.getLeft().getName().compareToIgnoreCase(name) == 0) nextInLineParent.setLeft(null);
-            if( nextInLineParent.getRight() != null && nextInLineParent.getRight().getName().compareToIgnoreCase(name) == 0) nextInLineParent.setRight(null);
+            if( successorParent.getLeft() != null && successorParent.getLeft().getName().compareToIgnoreCase(name) == 0) successorParent.setLeft(null);
+            if( successorParent.getRight() != null && successorParent.getRight().getName().compareToIgnoreCase(name) == 0) successorParent.setRight(null);
         }
     }
 
@@ -89,16 +88,6 @@ public class PhoneBook {
         }
         return cur;
     }
-//    public void delete(String name){
-////        Person target = search(name);
-////        System.out.println(target.isParent());
-////        if(target.isParent() == 0) {
-////            System.out.println("if triggered");
-////            target = null;
-////        }
-//
-//
-//    }
 
     public void updateName(String oName, String nName){
         Person p = search(oName);
@@ -117,14 +106,13 @@ public class PhoneBook {
         return search(name, this.root);
     }
 
-    public Person search(String name, Person cur) {
+    private Person search(String name, Person cur) {
         int flg = name.compareToIgnoreCase(cur.getName());
         if (flg < 0 ){
             if(cur.getLeft()!=null){
                 return search(name, cur.getLeft());
             } else{
                 System.out.println("Contact Does not exist gone left");
-//                return cur;
             }
         }
 
@@ -133,10 +121,8 @@ public class PhoneBook {
                 return  search(name, cur.getRight());
             } else {
                 System.out.println("Contact not found in right");
-//                return cur;
             }
         }
-
         return cur;
     }
 
@@ -146,11 +132,9 @@ public class PhoneBook {
 
     private Person searchParent(String name, Person cur) {
         int flg = name.compareToIgnoreCase(cur.getName());
-
         if (flg < 0 ){
             if(cur.getLeft()!=null){
                 if(cur.getLeft().getName().compareToIgnoreCase(name) == 0) {
-                    System.out.println("Found child in left");
                     return cur;
                 }
                 return searchParent(name, cur.getLeft());
@@ -160,7 +144,6 @@ public class PhoneBook {
         if (flg > 0){
             if( cur.getRight() != null){
                 if(cur.getRight().getName().compareToIgnoreCase(name) == 0) {
-                    System.out.println("Found child in right");
                     return cur;
                 }
                 return  searchParent(name, cur.getRight());
@@ -169,7 +152,8 @@ public class PhoneBook {
         System.out.println("Case triggered returning the item searched for"); // Should never be triggered
         return null;
     }
-    public void load(){
+
+    private void load(){
         try {
             BufferedReader in = new BufferedReader(new FileReader("contacts.csv"));
             String mystring;
@@ -182,14 +166,13 @@ public class PhoneBook {
         } catch (IOException e) {
             System.out.println("Exception Occurred" + e);
         }
-
     }
 
     public void save(){
         save(this.root);
     }
 
-    public void save(Person cur){
+    private void save(Person cur){
         if(cur == null) return;
         try {
             BufferedWriter out = new BufferedWriter(
@@ -217,7 +200,6 @@ public class PhoneBook {
     public void displayPreorder() {
         clearScreen();
         displayPreorder(this.root);
-
     }
 
     public void displayPreorder(Person cur) {
@@ -225,7 +207,6 @@ public class PhoneBook {
         cur.printInfo();
         displayPreorder(cur.getLeft());
         displayPreorder(cur.getRight());
-
     }
 
     public void displayPostorder() {
@@ -246,7 +227,6 @@ public class PhoneBook {
         String[] dirtyString = stringifyTree(this.root, "").split("\n");
         Set<String> set = new LinkedHashSet<>();
         set.addAll(List.of(dirtyString));
-
         for(String str : set){
             temp += str + "\n";
         }
@@ -258,8 +238,6 @@ public class PhoneBook {
         prev += cur.getName() + "," + cur.getNumber() + "\n";
         prev += stringifyTree(cur.getLeft(), prev);
         prev += stringifyTree(cur.getRight(), prev);
-
-
         return prev;
     }
 

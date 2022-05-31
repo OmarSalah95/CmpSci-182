@@ -90,13 +90,11 @@ public class Person {
         if(this.getLeft() != null && this.getRight() != null){
             return 3;
         }
-        return 2;
+        return 4;
     }
     // Helper function to pretty print data stored in this contact
     public void printInfo(){
         System.out.println("-----------------------------------");
         System.out.println("Name: "+ this.name + "\nNumber: "+this.number);
     }
-
-
 }

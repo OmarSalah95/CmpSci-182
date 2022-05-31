@@ -9,14 +9,18 @@
  */
 package phonebook;
 
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
+import java.util.InputMismatchException;
+import java.util.*;
+
+
 
 public class Menu {
     private PhoneBook pb;
+    private Scanner scn;
 
     public Menu(){
         this.pb = new PhoneBook();
+        this.scn  = new Scanner(System.in);
     }
 
     private void displayTimedMessage(String msg){
@@ -25,18 +29,16 @@ public class Menu {
         System.out.printf(format,msg);
         System.out.println("\n\n\n\n");
         try {
-            TimeUnit.SECONDS.sleep(1);
+            java.util.concurrent.TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     public void run(){
-        Scanner scn = new Scanner(System.in);
         String name,num;
         boolean running = true;
         int userInput;
-
 
         while(running){
             System.out.println("Menu");
@@ -47,15 +49,17 @@ public class Menu {
                     "4: Find Contact\n" +
                     "5: Update Contact\n" +
                     "6: Quit");
-            userInput = scn.nextInt();
+
+            userInput = this.scn.nextInt();
+
             switch(userInput){
                 case 1:
-                    scn.nextLine();
+                    this.scn.nextLine();
                     System.out.println("\n\n\n\nPlease enter the new contacts name\n\n\n\n");
-                    name = scn.nextLine();
+                    name = this.scn.nextLine();
 
                     System.out.println("\n\n\n\nPlease enter the new contacts number\n\n\n\n");
-                    num = scn.nextLine();
+                    num = this.scn.nextLine();
                     pb.add(name, num);
                     displayTimedMessage("Contact Added!");
                     break;
@@ -63,26 +67,26 @@ public class Menu {
                     pb.displayContacts();
                     break;
                 case 3:
-                    scn.nextLine();
-                    System.out.println("Please enter the name of the contact you would like to delete: ");
-                    name = scn.nextLine();
+                    this.scn.nextLine();
+                    System.out.println("\n\n\n\nPlease enter the name of the contact you would like to delete:\n\n\n\n");
+                    name = this.scn.nextLine();
                     pb.delete(name);
                     displayTimedMessage("Contact deleted");
                     break;
                 case 4:
-                    scn.nextLine();
-                    System.out.println("Please enter name of the contact you would like to find");
-                    name = scn.nextLine();
+                    this.scn.nextLine();
+                    System.out.println("\n\n\n\nPlease enter name of the contact you would like to find\n\n\n\n");
+                    name = this.scn.nextLine();
                     System.out.println("\n\n\n\n");
                     pb.search(name).printInfo();
                     System.out.println("\n\n\n\n");
                     break;
                 case 5:
-                    scn.nextLine();
-                    System.out.println("Please enter the contacts name who's number you would like to update");
-                    name = scn.nextLine();
-                    System.out.println("Please enter the new contact number");
-                    num = scn.nextLine();
+                    this.scn.nextLine();
+                    System.out.println("\n\n\n\nPlease enter the contacts name who's number you would like to update\n\n\n\n");
+                    name = this.scn.nextLine();
+                    System.out.println("\n\n\n\nPlease enter the new contact number\n\n\n\n");
+                    num = this.scn.nextLine();
                     pb.updateNumber(name, num);
                     displayTimedMessage("Contact Updated");
                     break;

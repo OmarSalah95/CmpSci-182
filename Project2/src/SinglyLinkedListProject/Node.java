@@ -8,12 +8,14 @@
 package SinglyLinkedListProject;
 
 public class Node {
+    private String item;
+    private Node next;
+
     public Node(String item){
         this.item = item;
         this.next = null;
     }
-    private String item;
-    private Node next;
+
 
     public String getItem(){
         return this.item;

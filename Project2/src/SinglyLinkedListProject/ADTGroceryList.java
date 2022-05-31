@@ -9,6 +9,9 @@
 package SinglyLinkedListProject;
 
 public class ADTGroceryList {
+    private Node head;
+    private int size;
+
    public ADTGroceryList(){
         this.head = null;
         this.size = 0;
@@ -25,8 +28,7 @@ public class ADTGroceryList {
         }
     }
 
-    private Node head;
-    private int size;
+
 
     public String get(int index){
         Node current = this.head;

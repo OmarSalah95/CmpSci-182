@@ -31,29 +31,34 @@ public class PhoneBook {
     private Person add(String nam, String num, Person cur)  {
         int flg;
             // If the cur person recieved is null, we are simply going to create a new person based
-            //      off of their information and return that person
+            //      off of their information and return that person where they belong as a new leaf on the tree orthat
+            //      will be set to root as a secondary base case this covers is that root was originally null in which
+            //      our new root will be added.
             if (cur == null) {
                 cur = new Person(nam, num);
                 return cur;
             }
+            // Compare to ignore case will return -x if a the original name is alphabetically before that which it is
+            //      compared to, 0 if they are the same, and  +x the name we are adding is alphabetically after the current
+            //      person. This will be our flag as to which side to traverse
             flg = nam.compareToIgnoreCase(cur.getName());
             // This would mean that our new contact belongs somewhere in the left subtree
-            //      and we can recursively add them somewhere in there
+            //      and we can recursively add them somewhere in there until reaching our base case
             if (flg < 0)
                 cur.setLeft(add(nam, num, cur.getLeft()));
             // This would mean that our current person belongs in the right subtree and we
             //      can recursively add them there
             else if (flg > 0)
                 cur.setRight(add(nam,num, cur.getRight()));
-            // This is basically our else, which is saying this person belongs right where they are
-            //      and to add them here
+            // This is basically our else which is that if the root is not null, we return the root. This works in all subtrees
+            //      in maintaining the right root and placing it on the proper branch while placing new leafs(contacts add where they belong)
             return cur;
     }
 
     public void delete(String name)
     {
         Person target = search(name); // Finding the node that is to be deleted
-        // Our next inline will be depending on if the target has a no, left, right, or both subtrees
+        // Our successor be depending on if the target has a no, left, right, or both subtrees
         //      If we have both, or just a left child we can simply find the max(Alphabetically last) person in the left
         //      subtree
         //      If we have a single child on the right, we can find the min(First alphabetically)
@@ -62,10 +67,11 @@ public class PhoneBook {
         //      So we can just assign it to null
         // So I went ahead and built all the logic in to find the successor to replace the parent node
         Person successor = target.getLeft() != null // Single child on the left or 2 children
-                    ? findMax(target.getLeft())
+                    ? findMax(target.getLeft()) // if true we assign succesor as the last Person alphabetically is the left tree
                 : target.getRight() != null // Single child on the right
-                    ? findMin(target.getRight())
-                : target; // No Children
+                    ? findMin(target.getRight()) // if true we assign succesor to the first alphabetically down the right tree
+                : target; // No Children here we will assign the successor to be the target (in which case we can just delete)
+
         // We will need to know who the parent of the successor is, so that we can setLeft or Right
         //      to be null, i.e. dereference that node in particular, so we can search for them here
         Person successorParent = searchParent(successor.getName());
@@ -77,15 +83,12 @@ public class PhoneBook {
             // predecessors position
             target.setName(successor.getName());
             target.setNumber(successor.getNumber());
-            // Re assign the refrence to the leaf node to be null i.e. delete the leaf
-            if( successorParent.getLeft() != null && successorParent.getLeft().getName().compareToIgnoreCase(successor.getName()) == 0) successorParent.setLeft(null);
-            if( successorParent.getRight() != null && successorParent.getRight().getName().compareToIgnoreCase(successor.getName()) == 0) successorParent.setRight(null);
-        } else {
-            // If this case is triggered that would mean that the node being deleted is a leaf, and thus
-            // we will simply assign the node to be deleted to be null
-            if( successorParent.getLeft() != null && successorParent.getLeft().getName().compareToIgnoreCase(name) == 0) successorParent.setLeft(null);
-            if( successorParent.getRight() != null && successorParent.getRight().getName().compareToIgnoreCase(name) == 0) successorParent.setRight(null);
         }
+        // Delete successor by assigning either side to null depending on which side they are on this will handle any case that comes up
+        if( successorParent.getLeft() != null && successorParent.getLeft().getName().compareToIgnoreCase(successor.getName()) == 0)
+            successorParent.setLeft(null);
+        if( successorParent.getRight() != null && successorParent.getRight().getName().compareToIgnoreCase(successor.getName()) == 0)
+            successorParent.setRight(null);
     }
     // Simple helper function to find the bottom right most node(Last alphabetically) in a sub-tree
     private Person findMax(Person cur){
@@ -94,7 +97,7 @@ public class PhoneBook {
         }
         return cur;
     }
-    // Simple helper function to find the bottom leftt most node(first alphabetically) in a sub-tree
+    // Simple helper function to find the bottom left most node(first alphabetically) in a sub-tree
     private Person findMin(Person cur){
         while (cur.getLeft() != null){
             cur = cur.getLeft();
@@ -177,7 +180,9 @@ public class PhoneBook {
     //      that are then used to instantiate new person as they are being added to the phonebook
     private void load(){
         try {
-            BufferedReader in = new BufferedReader(new FileReader("contacts.csv"));
+            // You can choose to run things in the tester file, it is smaller and easier to follow if needed, contacts
+            //      is a larger tree but better simulated, But make sure to make a similar modification on save before testing
+            BufferedReader in = new BufferedReader(new FileReader("contacts.csv")); // "contactsTest.csv"
             String mystring;
             in.readLine(); // Read past the csv description headers
             while ((mystring = in.readLine()) != null) {
@@ -194,7 +199,7 @@ public class PhoneBook {
     public void save(){
         try {
             BufferedWriter out = new BufferedWriter(
-                    new FileWriter("contacts.csv"));
+                    new FileWriter("contacts.csv")); // "contactsTest.csv" Dont forget to change this if testing save
             out.write("Name,Number\n");
             out.write(this.toString());
             out.close();

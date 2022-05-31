@@ -10,12 +10,25 @@
 package phonebook;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Menu {
     private PhoneBook pb;
 
     public Menu(){
         this.pb = new PhoneBook();
+    }
+
+    private void displayTimedMessage(String msg){
+        String format = "~~~%1$-"+msg.length()+"s~~~";
+        System.out.println("\n\n\n\n");
+        System.out.printf(format,msg);
+        System.out.println("\n\n\n\n");
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void run(){
@@ -38,12 +51,13 @@ public class Menu {
             switch(userInput){
                 case 1:
                     scn.nextLine();
-                    System.out.println("Please enter the new contacts name");
+                    System.out.println("\n\n\n\nPlease enter the new contacts name\n\n\n\n");
                     name = scn.nextLine();
 
-                    System.out.println("Please enter the new contacts number");
+                    System.out.println("\n\n\n\nPlease enter the new contacts number\n\n\n\n");
                     num = scn.nextLine();
                     pb.add(name, num);
+                    displayTimedMessage("Contact Added!");
                     break;
                 case 2:
                     pb.displayContacts();
@@ -53,12 +67,15 @@ public class Menu {
                     System.out.println("Please enter the name of the contact you would like to delete: ");
                     name = scn.nextLine();
                     pb.delete(name);
+                    displayTimedMessage("Contact deleted");
                     break;
                 case 4:
                     scn.nextLine();
                     System.out.println("Please enter name of the contact you would like to find");
                     name = scn.nextLine();
+                    System.out.println("\n\n\n\n");
                     pb.search(name).printInfo();
+                    System.out.println("\n\n\n\n");
                     break;
                 case 5:
                     scn.nextLine();
@@ -67,9 +84,11 @@ public class Menu {
                     System.out.println("Please enter the new contact number");
                     num = scn.nextLine();
                     pb.updateNumber(name, num);
+                    displayTimedMessage("Contact Updated");
                     break;
                 default:
                     pb.save();
+                    displayTimedMessage("Data stored");
                     running = false;
                     break;
             }

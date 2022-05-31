@@ -54,7 +54,7 @@ public class Person {
     public void setNumber(String newNum){
         // Just a simple regex replace to split up the incoming data and make
         //      it look nice before we store it in the Contact
-        newNum = newNum.replaceFirst("(\\d{3})(\\d{3})(\\d{4})", "+1($1) $2-$3");
+        newNum = newNum.replaceFirst("(\\d{3})(\\d{3})(\\d{4})", "+1 ($1) $2-$3");
         this.number = newNum;
     }
 

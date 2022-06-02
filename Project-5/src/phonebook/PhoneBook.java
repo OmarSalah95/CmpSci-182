@@ -151,7 +151,7 @@ public class PhoneBook {
     // Simple recursive method similar to search that will find a parent given a name to look for
     //      This is mainly an internal function only used for deleting but may come in handy
     //      later
-    public Person searchParent(String name){
+    private Person searchParent(String name){
         return searchParent(name, this.root);
     }
     // Recursive search for parent
@@ -231,36 +231,45 @@ public class PhoneBook {
     }
     // Recursive helper function
     public void displayPostorder() {
-        displayPreorder(this.root);
+        displayPostorder(this.root);
     }
     // Recursive implementation of post-order traversal printing
     public void displayPostorder(Person cur) {
+        // L > R > C
         if (cur == null) return;
+        displayPostorder(cur.getLeft());
         displayPostorder(cur.getRight());
         cur.printInfo();
-        displayPostorder(cur.getLeft());
     }
 
     @Override
-    // This method is really mainly used just for saving data to a file
-    //      The main purpose is to clean and remove duplicate entries while preserving
-    //      the order (Since pre-order will form the most balanced tree) befor returning it
-    //      as a string
+    // This method is used for displaying the phone book in a clean simple format, but also can be written directly to
+    //      our contact files
     public String toString() {
         String temp = "";
+        // Here we are making an array that will hold all of the data strings separated by contacts(the new line)
         String[] dirtyString = stringifyTree(this.root, "").split("\n");
+        // Since sets remove duplicates the best thing to do was to use a set. The issue then became preserving the order
+        //     The only way to do so would be by using a LinkedHashSet which holds the data as a linked list rather than
+        //      a tree like TreeSet which uses a tree(Alphabetical order), or a HashSet which is basically a Hashed Arraylist
+        //      and as made the order bottom heavy based on their algorithm(Last letters came first) and semi random
         Set<String> set = new LinkedHashSet<>();
+        // We are just going to add all of our contacts to the set, to clear the dupes
         set.addAll(List.of(dirtyString));
+        // Then a simple for each loop to add each of the contacts followed by a new line which makes it presentable and
+        //      perfect for storing
         for(String str : set){
             temp += str + "\n";
         }
+
         return temp;
     }
     // Recursively creates a string that shows all the steps of traversal until ultimately ending
-    //      in the pre-order display of all the contacts information formatted as it would be needed
-    //      For saving. So all we really need to do is remove all of the duplicate entries in the string
-    //      so this long string can be passed to toString which can then spit out a cleaned versoin
-    //      without any dupes
+    //      in the pre-order display of all the contacts with data formatted for names to ensure tree worked as it is
+    //      should and debugging tool, I then realized I might be able to use it to grab more available data and format
+    //      the data as CSV I could then just remove all of the duplicates and preserver the order since pre-order is
+    //      going to start us off with a well balanced tree on load. I can also just override toString on this object to
+    //      do so for me. This can easily be written to the file as well.
     private String stringifyTree(Person cur, String prev){
         if(cur == null) return prev;
         prev += cur.getName() + "," + cur.getNumber() + "\n";

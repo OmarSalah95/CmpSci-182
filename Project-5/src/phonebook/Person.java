@@ -11,10 +11,10 @@
 package phonebook;
 
 public class Person {
-    private String name = "";
-    private String number = "";
-    private Person right = null;
-    private Person left = null;
+    private String name;
+    private String number;
+    private Person right;
+    private Person left;
 
     public Person(String nam, String num){
         this.setName(nam); // I did it this way so I don't have to re-write all the formatting
@@ -77,21 +77,21 @@ public class Person {
     //      returning a int depening on if it has no children, 1 left
     //      child, 1 right child, or both left and right children
     //      But my implementations dont need it so it is just extra
-    public int isParent(){
-        if(this.getLeft() == null && getRight() == null){
-            return 0;
-        }
-        if(this.getLeft() != null && this.getRight() == null){
-            return 1;
-        }
-        if(this.getLeft() == null && this.getRight() != null){
-            return 2;
-        }
-        if(this.getLeft() != null && this.getRight() != null){
-            return 3;
-        }
-        return 4;
-    }
+//    public int isParent(){
+//        if(this.getLeft() == null && getRight() == null){
+//            return 0;
+//        }
+//        if(this.getLeft() != null && this.getRight() == null){
+//            return 1;
+//        }
+//        if(this.getLeft() == null && this.getRight() != null){
+//            return 2;
+//        }
+//        if(this.getLeft() != null && this.getRight() != null){
+//            return 3;
+//        }
+//        return 4;
+//    }
     // Helper function to pretty print data stored in this contact
     public void printInfo(){
         System.out.println("-----------------------------------");
